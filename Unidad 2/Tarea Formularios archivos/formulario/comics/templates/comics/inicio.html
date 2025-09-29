@@ -1,24 +1,70 @@
-<h1>Lista de Cómics</h1>
-<a href="{% url 'subir_comic' %}">Subir nuevo cómic</a>
-<table border="1">
-    <tr>
-        <th>Título</th>
-        <th>Autor</th>
-        <th>Editorial</th>
-        <th>Archivo</th>
-        <th>Editar</th>
-    </tr>
-    {% for comic in comics %}
-    <tr>
-        <td>{{ comic.titulo }}</td>
-        <td>{{ comic.autor }}</td>
-        <td>{{ comic.editorial }}</td>
-        <td>
-            <a href="{{ comic.archivo.url }}" target="_blank">Ver archivo</a>
-        </td>
-        <td>
-            <a href="{% url 'editar_comic' comic.pk %}">Editar</a>
-        </td>
-    </tr>
-    {% endfor %}
-</table>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Cómics</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            padding: 40px;
+            text-align: center;
+        }
+        h1 {
+            font-size: 28px;
+            margin-bottom: 30px;
+        }
+        table {
+            margin: 0 auto;
+            border-collapse: collapse;
+            width: 90%;
+            background-color: #ffffff;
+        }
+        th, td {
+            border: 1px solid #cccccc;
+            padding: 10px;
+            text-align: center;
+        }
+        th {
+            background-color: #eeeeee;
+        }
+        a.button {
+            display: inline-block;
+            padding: 10px 15px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+        a.button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Lista de Cómics</h1>
+    <a href="{% url 'subir_comic' %}" class="button">Subir nuevo cómic</a>
+
+    <table>
+        <tr>
+            <th>Título</th>
+            <th>Autor</th>
+            <th>Editorial</th>
+            <th>Archivo</th>
+            <th>Editar</th>
+        </tr>
+        {% for comic in comics %}
+        <tr>
+            <td>{{ comic.titulo }}</td>
+            <td>{{ comic.autor }}</td>
+            <td>{{ comic.editorial }}</td>
+            <td><a href="{{ comic.archivo.url }}" target="_blank">Ver archivo</a></td>
+            <td><a href="{% url 'editar_comic' comic.pk %}">Editar</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+
+</body>
+</html>
