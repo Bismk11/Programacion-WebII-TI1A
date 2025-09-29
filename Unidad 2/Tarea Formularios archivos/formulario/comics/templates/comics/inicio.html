@@ -1,0 +1,24 @@
+<h1>Lista de Cómics</h1>
+<a href="{% url 'subir_comic' %}">Subir nuevo cómic</a>
+<table border="1">
+    <tr>
+        <th>Título</th>
+        <th>Autor</th>
+        <th>Editorial</th>
+        <th>Archivo</th>
+        <th>Editar</th>
+    </tr>
+    {% for comic in comics %}
+    <tr>
+        <td>{{ comic.titulo }}</td>
+        <td>{{ comic.autor }}</td>
+        <td>{{ comic.editorial }}</td>
+        <td>
+            <a href="{{ comic.archivo.url }}" target="_blank">Ver archivo</a>
+        </td>
+        <td>
+            <a href="{% url 'editar_comic' comic.pk %}">Editar</a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
