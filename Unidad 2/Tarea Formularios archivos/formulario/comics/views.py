@@ -21,3 +21,8 @@ class EditarComicView(UpdateView):
     form_class = ComicForm
     template_name = 'comics/editar.html'
     success_url = reverse_lazy('lista_comics')
+    
+    def get_form(self, form_class=None):
+        form = super().get_form(form_class)
+        form.fields.pop('archivo') #Así ya no hay que subir por fuerza la imagen o pdf
+        return form
