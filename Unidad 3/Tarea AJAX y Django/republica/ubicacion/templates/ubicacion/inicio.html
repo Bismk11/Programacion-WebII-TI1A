@@ -1,1 +1,62 @@
-<h1>Selecciona un estado y su municipio</h1>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Estados y Municipios</title>
+</head>
+<body>
+    <h1>Selecciona un estado y su municipio</h1>
+
+    <label for="estado-select">Estado:</label>
+    <select id="estado-select">
+        <option value="">Selecciona un estado</option>
+        {% for estado in estados %}
+        <option value="{{ estado }}">{{ estado }}</option>
+        {% endfor %}
+    </select>
+
+    <br><br>
+
+    <label for="municipio-select">Municipio:</label>
+    <select id="municipio-select" disabled>
+        <option value="">Selecciona un municipio</option>
+    </select>
+
+    <script>
+        const estadoSelect = document.getElementById('estado-select');
+        const municipioSelect = document.getElementById('municipio-select');
+
+        estadoSelect.addEventListener('change', () => {
+            const estado = estadoSelect.value;
+
+            municipioSelect.innerHTML = '<option value="">Selecciona un municipio</option>';
+            municipioSelect.disabled = true;
+
+            if (!estado) return;
+
+            fetch(`/ajax/municipios/?estado=${encodeURIComponent(estado)}`, {
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.municipios) {
+                    data.municipios.forEach(mun => {
+                        const option = document.createElement('option');
+                        option.value = mun;
+                        option.textContent = mun;
+                        municipioSelect.appendChild(option);
+                    });
+                    municipioSelect.disabled = false;
+                } else {
+                    alert(data.error || 'Error desconocido');
+                }
+            })
+            .catch(error => {
+                console.error('Error al cargar municipios:', error);
+            });
+        });
+    </script>
+</body>
+</html>
