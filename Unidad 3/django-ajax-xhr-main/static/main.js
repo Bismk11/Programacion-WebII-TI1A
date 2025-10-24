@@ -86,8 +86,8 @@ async function addTodo(url, payload) {
 }
 
 
-function updateTodo(url, payload) {
-  fetch(url, {
+async function updateTodo(url, payload) {
+  const response = await fetch(url, {
     method: "PUT",
     credentials: "same-origin",
     headers: {
@@ -96,10 +96,8 @@ function updateTodo(url, payload) {
     },
     body: JSON.stringify({payload: payload})
   })
-  .then(response => response.json())
-  .then(data => {
-    console.log(data);
-  });
+  const data = await response.json();
+  console.log(data);
 }
 
 
