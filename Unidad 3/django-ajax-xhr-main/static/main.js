@@ -66,20 +66,23 @@ function getAllTodos(url) {
 };
 
 
-function addTodo(url, payload) {
-  fetch(url, {
+// function addTodo(url, payload) {
+async function addTodo(url, payload) {
+  // fetch(url, {
+  const response = await fetch(url, {
     method: "POST",
     credentials: "same-origin",
     headers: {
       "X-Requested-With": "XMLHttpRequest",
-      // "X-CSRFToken": getCookie("csrftoken"),
+      "X-CSRFToken": getCookie("csrftoken"),
     },
     body: JSON.stringify({payload: payload})
   })
-  .then(response => response.json())
-  .then(data => {
-    console.log(data);
-  });
+  // .then(response => response.json())
+  // .then(data => {
+  const data = await response.json();
+  console.log(data);
+  // });
 }
 
 
